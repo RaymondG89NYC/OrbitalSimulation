@@ -6,19 +6,19 @@ import java.util.*;
 
 public class CelestialBody {
     private Sprite sprite;
-    private double mass;
-    private double x;
-    private double y;
-    private double xSpeed;
-    private double ySpeed;
-    private double xAccel;
-    private double yAccel;
-    private double xForce;
-    private double yForce;
-    private final double GRAVITATIONAL_CONSTANT = 100;
+    private float mass;
+    private float x;
+    private float y;
+    private float xSpeed;
+    private float ySpeed;
+    private float xAccel;
+    private float yAccel;
+    private float xForce;
+    private float yForce;
+    private final float GRAVITATIONAL_CONSTANT = 100;
     private ArrayList<CelestialBody> otherBodies;
     private int line;
-    public CelestialBody(Texture img, double x, double y, double mass, ArrayList<CelestialBody> otherBodies, int num){
+    public CelestialBody(Texture img, float x, float y, float mass, ArrayList<CelestialBody> otherBodies, int num){
         sprite = new Sprite(img);
         this.x = x;
         this.y = y;
@@ -70,60 +70,60 @@ public class CelestialBody {
     }
 
 
-    public double getX(){
+    public float getX(){
         return x;
     }
-    public double getY() {
+    public float getY() {
         return y;
     }
-    public double getMass() {
+    public float getMass() {
         return mass;
     }
-    public double getxAccel() {
+    public float getxAccel() {
         return xAccel;
     }
-    public double getxForce() {
+    public float getxForce() {
         return xForce;
     }
-    public double getxSpeed() {
+    public float getxSpeed() {
         return xSpeed;
     }
-    public double getyAccel() {
+    public float getyAccel() {
         return yAccel;
     }
-    public double getyForce() {
+    public float getyForce() {
         return yForce;
     }
-    public double getySpeed() {
+    public float getySpeed() {
         return ySpeed;
     }
 
-    public void setX(double x) {
+    public void setX(float x) {
         this.x = x;
     }
-    public void setY(double y) {
+    public void setY(float y) {
         this.y = y;
     }
-    public void setMass(double mass) {
+    public void setMass(float mass) {
         this.mass = mass;
     }
 
-    public void setxAccel(double xAccel) {
+    public void setxAccel(float xAccel) {
         this.xAccel = xAccel;
     }
-    public void setxForce(double xForce) {
+    public void setxForce(float xForce) {
         this.xForce = xForce;
     }
-    public void setxSpeed(double xSpeed) {
+    public void setxSpeed(float xSpeed) {
         this.xSpeed = xSpeed;
     }
-    public void setyAccel(double yAccel) {
+    public void setyAccel(float yAccel) {
         this.yAccel = yAccel;
     }
-    public void setyForce(double yForce) {
+    public void setyForce(float yForce) {
         this.yForce = yForce;
     }
-    public void setySpeed(double ySpeed) {
+    public void setySpeed(float ySpeed) {
         this.ySpeed = ySpeed;
     }
 }
