@@ -15,7 +15,7 @@ public class CelestialBody {
     private float yAccel;
     private float xForce;
     private float yForce;
-    private final float GRAVITATIONAL_CONSTANT = 100;
+    private final float GRAVITATIONAL_CONSTANT = 0.000001f;
     private ArrayList<CelestialBody> otherBodies;
     private int line;
     public CelestialBody(Texture img, float x, float y, float mass, ArrayList<CelestialBody> otherBodies, int num){
@@ -35,10 +35,16 @@ public class CelestialBody {
     public void update(){
         xAccel = 0;
         yAccel = 0;
+        xForce = 0;
+        yForce = 0;
         for(int i = 0; i < otherBodies.size(); i++) {
             if(i != line) {
-                xAccel = findXForce(i) / mass;
-                yAccel = findYForce(i) / mass;
+                xForce += findXForce(i);
+                yForce += findYForce(i);
+                yAccel = xForce / mass;
+                xAccel = yForce / mass;
+//                xAccel = xForce / mass;
+//                yAccel = yForce / mass;
             }
         }
         xSpeed += xAccel;
@@ -51,9 +57,9 @@ public class CelestialBody {
     }
 
     public float findXForce(int num){
-        if((otherBodies.get(num).getX()-x) == 0){
-            return 0;
-        }
+//        if((otherBodies.get(num).getX()-x) >= -1 && (otherBodies.get(num).getX()-x) <= 1){
+//            return 0;
+//        }
 //        System.out.println("Top val: " + (GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass()));
 //        System.out.println("Bottom Bal: " + (Math.pow((otherBodies.get(num).getX()-x)*1,2)));
         return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
@@ -61,12 +67,12 @@ public class CelestialBody {
                 ((Math.pow((otherBodies.get(num).getX()-x)*1,2)) * Math.signum(otherBodies.get(num).getX()-x)));
     }
     public float findYForce(int num){
-        if((otherBodies.get(num).getY()-y) == 0){
-            return 0;
-        }
+//        if((otherBodies.get(num).getY()-y) >= -1 && (otherBodies.get(num).getY()-y) <= 1){
+//            return 0;
+//        }
         return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
                 /
-                (Math.pow((otherBodies.get(num).getY()-y)*1, 2) * Math.signum(otherBodies.get(num).getY()-y)));
+                ((Math.pow((otherBodies.get(num).getY()-y)* 1, 2)) * Math.signum(otherBodies.get(num).getY()-y)));
     }
 
 

@@ -25,9 +25,9 @@ public class Simulation extends ApplicationAdapter {
 		planet = new Texture("planet.png");
 		star = new Texture("star.png");
 		celestialBodies = new ArrayList<CelestialBody>();
-		CelestialBody b1 = new CelestialBody(planet, 0, 0, 1, celestialBodies, celestialBodies.size());
+		CelestialBody b1 = new CelestialBody(planet, 200, 0, 10000, celestialBodies, celestialBodies.size());
 		celestialBodies.add(b1);
-		CelestialBody b2 = new CelestialBody(star, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 10, celestialBodies, celestialBodies.size());
+		CelestialBody b2 = new CelestialBody(star, Gdx.graphics.getWidth()/2+100, Gdx.graphics.getHeight()/2+100, 1000000000, celestialBodies, celestialBodies.size());
 		celestialBodies.add(b2);
 
 	}
