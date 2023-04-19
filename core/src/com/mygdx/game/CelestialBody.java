@@ -57,22 +57,22 @@ public class CelestialBody {
     }
 
     public float findXForce(int num){
-//        if((otherBodies.get(num).getX()-x) >= -1 && (otherBodies.get(num).getX()-x) <= 1){
-//            return 0;
-//        }
+        if((otherBodies.get(num).getX()-x) >= -1f && (otherBodies.get(num).getX()-x) <= 1f){
+            return 0;
+        }
 //        System.out.println("Top val: " + (GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass()));
-//        System.out.println("Bottom Bal: " + (Math.pow((otherBodies.get(num).getX()-x)*1,2)));
+        System.out.println("Denominator " + num + ":" + ((Math.pow((otherBodies.get(num).getX()-x)*1,2)) * Math.signum(otherBodies.get(num).getX()-x)));
         return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
                 /
-                ((Math.pow((otherBodies.get(num).getX()-x)*1,2)) * Math.signum(otherBodies.get(num).getX()-x)));
+                ((Math.pow((otherBodies.get(num).getX()-x)*10,2)) * Math.signum(otherBodies.get(num).getX()-x)));
     }
     public float findYForce(int num){
-//        if((otherBodies.get(num).getY()-y) >= -1 && (otherBodies.get(num).getY()-y) <= 1){
-//            return 0;
-//        }
+        if((otherBodies.get(num).getY()-y) >= -1f && (otherBodies.get(num).getY()-y) <= 1f){
+            return 0;
+        }
         return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
                 /
-                ((Math.pow((otherBodies.get(num).getY()-y)* 1, 2)) * Math.signum(otherBodies.get(num).getY()-y)));
+                ((Math.pow((otherBodies.get(num).getY()-y)* 10, 2)) * Math.signum(otherBodies.get(num).getY()-y)));
     }
 
 

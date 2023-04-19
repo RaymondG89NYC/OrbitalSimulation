@@ -25,9 +25,9 @@ public class Simulation extends ApplicationAdapter {
 		planet = new Texture("planet.png");
 		star = new Texture("star.png");
 		celestialBodies = new ArrayList<CelestialBody>();
-		CelestialBody b1 = new CelestialBody(planet, 200, 0, 10000, celestialBodies, celestialBodies.size());
+		CelestialBody b1 = new CelestialBody(planet, 400, 100, 10000, celestialBodies, celestialBodies.size());
 		celestialBodies.add(b1);
-		CelestialBody b2 = new CelestialBody(star, Gdx.graphics.getWidth()/2+100, Gdx.graphics.getHeight()/2+100, 1000000000, celestialBodies, celestialBodies.size());
+		CelestialBody b2 = new CelestialBody(star, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 1000000000, celestialBodies, celestialBodies.size());
 		celestialBodies.add(b2);
 
 	}
@@ -40,10 +40,10 @@ public class Simulation extends ApplicationAdapter {
 			CB.draw(batch);
 			CB.update();
 		}
-		mouseTestFrames ++;
-		if(mouseTestFrames%60==0) {
-			System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
-		}
+//		mouseTestFrames ++;
+//		if(mouseTestFrames%60==0) {
+//			System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
+//		}
 		batch.end();
 	}
 	
