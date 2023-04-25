@@ -15,16 +15,16 @@ public class CelestialBody {
     private float yAccel;
     private float xForce;
     private float yForce;
-    private final float GRAVITATIONAL_CONSTANT = 0.000001f;
+    private final float GRAVITATIONAL_CONSTANT = 0.0000066743f;
     private ArrayList<CelestialBody> otherBodies;
-    private int line;
-    public CelestialBody(Texture img, float x, float y, float mass, ArrayList<CelestialBody> otherBodies, int num){
+    private int index;
+    public CelestialBody(Texture img, float x, float y, float mass, ArrayList<CelestialBody> otherBodies, int index){
         sprite = new Sprite(img);
         this.x = x;
         this.y = y;
         this.mass = mass;
         this.otherBodies = otherBodies;
-        line = num;
+        this.index = index;
         sprite.setPosition((float) x, (float) y);
     }
 
@@ -37,14 +37,15 @@ public class CelestialBody {
         yAccel = 0;
         xForce = 0;
         yForce = 0;
+//        System.out.println(index + " " +otherBodies.size());
         for(int i = 0; i < otherBodies.size(); i++) {
-            if(i != line) {
+            if(i != index) {
                 xForce += findXForce(i);
                 yForce += findYForce(i);
-                yAccel = xForce / mass;
-                xAccel = yForce / mass;
-//                xAccel = xForce / mass;
-//                yAccel = yForce / mass;
+//                yAccel = xForce / mass;
+//                xAccel = yForce / mass;
+                xAccel = xForce / mass;
+                yAccel = yForce / mass;
             }
         }
         xSpeed += xAccel;
@@ -56,23 +57,25 @@ public class CelestialBody {
 //        sprite.translate((float)xSpeed, (float)ySpeed);
     }
 
-    public float findXForce(int num){
-        if((otherBodies.get(num).getX()-x) >= -1f && (otherBodies.get(num).getX()-x) <= 1f){
+    public float findXForce(int otherIndex){
+        System.out.println("XRange : " + (otherBodies.get(otherIndex).getX()-x));
+        if((otherBodies.get(otherIndex).getX()-x) >= -1f && (otherBodies.get(otherIndex).getX()-x) <= 1f){
             return 0;
         }
-//        System.out.println("Top val: " + (GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass()));
-        System.out.println("Denominator " + num + ":" + ((Math.pow((otherBodies.get(num).getX()-x)*1,2)) * Math.signum(otherBodies.get(num).getX()-x)));
-        return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
+//        System.out.println("Top val: " + (GRAVITATIONAL_CONSTANT*mass* otherBodies.get(otherIndex).getMass()));
+//        System.out.println("Denominator " + otherIndex + ":" + ((Math.pow((otherBodies.get(otherIndex).getX()-x)*1,2)) * Math.signum(otherBodies.get(otherIndex).getX()-x)));
+        return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(otherIndex).getMass())
                 /
-                ((Math.pow((otherBodies.get(num).getX()-x)*10,2)) * Math.signum(otherBodies.get(num).getX()-x)));
+                ((Math.pow((otherBodies.get(otherIndex).getX()-x)*10,2))) * Math.signum(otherBodies.get(otherIndex).getX()-x));
     }
-    public float findYForce(int num){
-        if((otherBodies.get(num).getY()-y) >= -1f && (otherBodies.get(num).getY()-y) <= 1f){
+    public float findYForce(int otherIndex){
+        System.out.println("YRange : " + (otherBodies.get(otherIndex).getY()-y));
+        if((otherBodies.get(otherIndex).getY()-y) >= -1f && (otherBodies.get(otherIndex).getY()-y) <= 1f){
             return 0;
         }
-        return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(num).getMass())
+        return (float)((GRAVITATIONAL_CONSTANT*mass* otherBodies.get(otherIndex).getMass())
                 /
-                ((Math.pow((otherBodies.get(num).getY()-y)* 10, 2)) * Math.signum(otherBodies.get(num).getY()-y)));
+                ((Math.pow((otherBodies.get(otherIndex).getY()-y)* 10, 2))) * Math.signum(otherBodies.get(otherIndex).getY()-y));
     }
 
 
