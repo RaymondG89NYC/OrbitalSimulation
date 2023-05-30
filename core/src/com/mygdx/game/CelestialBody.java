@@ -15,10 +15,15 @@ public class CelestialBody {
     private float yAccel;
     private float xForce;
     private float yForce;
-    private final float GRAVITATIONAL_CONSTANT = 1000000f;
-    private final float DISTANCE_MULTIPLIER = 1f;
+    private float externalXForce;
+    private float externalYForce;
+    private final float GRAVITATIONAL_CONSTANT = 0.001f;
+    private final float DISTANCE_MULTIPLIER = 10f;
+    private final float DEFAULT_RADIUS = 11f;
+    private final float MAX_FORCE = 1000f;
     private ArrayList<CelestialBody> otherBodies;
     private int line;
+    private float radius;
     public CelestialBody(Texture img, float x, float y, float mass, ArrayList<CelestialBody> otherBodies, int num){
         sprite = new Sprite(img);
         this.x = x;
@@ -27,10 +32,10 @@ public class CelestialBody {
         this.otherBodies = otherBodies;
         line = num;
         sprite.setPosition((float) x, (float) y);
+        radius = 11;
     }
 
     public void draw(SpriteBatch batch){
-
         sprite.draw(batch);
     }
     public void update() {
@@ -45,7 +50,12 @@ public class CelestialBody {
                 yForce += findYForce(i);
             }
         }
+        xForce += externalXForce;
+        yForce += externalYForce;
+        externalXForce = 0;
+        externalYForce = 0;
 
+        System.out.println("Number: " + line + ", xForce: " + xForce + ", yForce: " + yForce);
         xAccel = xForce / mass;
         yAccel = yForce / mass;
         xSpeed += xAccel;
@@ -53,26 +63,42 @@ public class CelestialBody {
         x += xSpeed;
         y += ySpeed;
         sprite.setPosition(x, y);
+
+        radius = calculateRadius(mass);
+        sprite.setScale(radius/DEFAULT_RADIUS);
     }
 
-    public float findXForce(int num) {
+    private float findXForce(int num) {
         float distance = (otherBodies.get(num).getX() - x) * DISTANCE_MULTIPLIER;
         float magnitude = (float) Math.sqrt(distance * distance);
-        if (magnitude < 0.1f) {
+        if (magnitude < 50f) {
             return 0;
         }
         float force = (GRAVITATIONAL_CONSTANT * mass * otherBodies.get(num).getMass()) / (magnitude * magnitude);
-        return Math.max(-10000f, Math.min(10000f, force * (distance / magnitude)));
+        return Math.max(-MAX_FORCE, Math.min(MAX_FORCE, force * (distance / magnitude)));
     }
 
-    public float findYForce(int num) {
+    private float findYForce(int num) {
         float distance = (otherBodies.get(num).getY() - y) * DISTANCE_MULTIPLIER;
         float magnitude = (float) Math.sqrt(distance * distance);
-        if (magnitude < 0.1f) {
+        if (magnitude < 50f) {
             return 0;
         }
         float force = (GRAVITATIONAL_CONSTANT * mass * otherBodies.get(num).getMass()) / (magnitude * magnitude);
-        return Math.max(-10000f, Math.min(10000f, force * (distance / magnitude)));
+        return Math.max(-MAX_FORCE, Math.min(MAX_FORCE, force * (distance / magnitude)));
+    }
+
+    private float calculateRadius(float mass) {
+        float density = 1f;
+        float volume = mass / density;
+        return (float) Math.pow((3 * volume) / (4 * Math.PI), 1 / 3f);
+    }
+
+    public void addExternalXForce(float force){
+        externalXForce += force;
+    }
+    public void addExternalYForce(float force){
+        externalYForce += force;
     }
 
 
@@ -102,6 +128,15 @@ public class CelestialBody {
     }
     public float getySpeed() {
         return ySpeed;
+    }
+    public int getLine(){
+        return line;
+    }
+    public float getRadius(){
+        return radius;
+    }
+    public float getTotalForce(){
+        return (float)Math.sqrt(Math.pow(xForce,2) + Math.pow(yForce,2));
     }
 
     public void setX(float x) {
