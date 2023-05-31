@@ -93,13 +93,17 @@ public class CelestialBody {
         float volume = mass / density;
         return (float) Math.pow((3 * volume) / (4 * Math.PI), 1 / 3f);
     }
-
+    public boolean mouseTouched(float x, float y){
+        return(this.x + radius >= x && this.x - radius <= x
+        && this.y + radius >= y && this.y - radius <= y);
+    }
     public void addExternalXForce(float force){
         externalXForce += force;
     }
     public void addExternalYForce(float force){
         externalYForce += force;
     }
+
 
 
     public float getX(){

@@ -28,6 +28,9 @@ public class Simulation extends ApplicationAdapter {
 	Texture arrow1;
 	ArrayList<Arrow> arrows;
 	int mouseTestFrames;
+	float mouseX;
+	float mouseY;
+	int curIndex;
 	
 	@Override
 	public void create () {
@@ -71,17 +74,35 @@ public class Simulation extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(Color.BLACK);
 		batch.begin();
+		mouseX = Gdx.input.getX();
+		mouseY = Gdx.input.getY();
+
+		int tempIndex = 10000;
 		for(CelestialBody CB : celestialBodies){
 			CB.update();
 			CB.draw(batch);
+			if(CB.mouseTouched(mouseX, mouseY)){
+				System.out.println("TESTESTESTESTESTEST");
+				System.out.println(CB.getLine());
+				tempIndex = CB.getLine();
+			}
 		}
+		curIndex = tempIndex;
+
 		for(Arrow arrow: arrows){
 			arrow.update();
 			arrow.draw(batch);
 		}
+
 		mouseTestFrames ++;
 		if(mouseTestFrames%60==0) {
 			System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
+		}
+
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+			if(curIndex != 10000){
+
+			}
 		}
 		batch.end();
 	}
