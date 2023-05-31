@@ -15,23 +15,24 @@ import java.util.ArrayList;
 
 
 public class Simulation extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture planet;
-	Texture star1;
-	Texture star2;
-	Texture star3;
-	Texture star4;
-	Texture star5;
-	Texture star6;
-	ArrayList<Texture> stars;
-	ArrayList<CelestialBody> celestialBodies;
-	Texture arrow1;
-	ArrayList<Arrow> arrows;
-	int mouseTestFrames;
-	float mouseX;
-	float mouseY;
-	int curIndex;
-	
+	private SpriteBatch batch;
+	private Texture planet;
+	private Texture star1;
+	private Texture star2;
+	private Texture star3;
+	private Texture star4;
+	private Texture star5;
+	private Texture star6;
+	private 	ArrayList<Texture> stars;
+	private 	ArrayList<CelestialBody> celestialBodies;
+	private Texture arrow1;
+	private ArrayList<Arrow> arrows;
+	private int mouseTestFrames;
+	private float mouseX;
+	private float mouseY;
+	private int curIndex;
+	private boolean isControl;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -82,12 +83,13 @@ public class Simulation extends ApplicationAdapter {
 			CB.update();
 			CB.draw(batch);
 			if(CB.mouseTouched(mouseX, mouseY)){
-				System.out.println("TESTESTESTESTESTEST");
-				System.out.println(CB.getLine());
 				tempIndex = CB.getLine();
 			}
+			System.out.println(CB.getX());
 		}
-		curIndex = tempIndex;
+		if(!isControl) {
+			curIndex = tempIndex;
+		}
 
 		for(Arrow arrow: arrows){
 			arrow.update();
@@ -100,10 +102,17 @@ public class Simulation extends ApplicationAdapter {
 		}
 
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			if(curIndex != 10000){
-
+			if(curIndex != 10000 || isControl){
+				isControl = true;
+				celestialBodies.get(curIndex).addExternalXForce(Helper.calcForceX(mouseX, celestialBodies.get(curIndex).getX()));
+				celestialBodies.get(curIndex).addExternalYForce(Helper.calcForceY(mouseY, celestialBodies.get(curIndex).getY()));
 			}
 		}
+		else{
+			isControl = false;
+		}
+		System.out.println("isControl: " + isControl);
+		System.out.println(curIndex);
 		batch.end();
 	}
 	

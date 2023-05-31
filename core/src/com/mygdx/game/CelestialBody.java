@@ -142,6 +142,9 @@ public class CelestialBody {
     public float getTotalForce(){
         return (float)Math.sqrt(Math.pow(xForce,2) + Math.pow(yForce,2));
     }
+    public float getTotalVelocity(){
+        return (float)Math.sqrt(Math.pow(xSpeed,2) + Math.pow(ySpeed,2));
+    }
 
     public void setX(float x) {
         this.x = x;

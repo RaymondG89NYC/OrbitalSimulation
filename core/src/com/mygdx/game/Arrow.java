@@ -28,7 +28,7 @@ public class Arrow {
         y = star.getY();
         sprite.setPosition(x, y);
         sprite.setRotation(angle);
-        sprite.setScale(star.getTotalForce()/10000, star.getRadius()/11);
+        sprite.setScale(star.getTotalVelocity()*2, star.getRadius()/11);
     }
     public void setMouseX(float x){
         mouseX = x;

@@ -25,9 +25,14 @@ public class Helper {
         angle = (float) radians * MathUtils.radiansToDegrees;
         return angle;
     }
-//    public static float calcForceX(float finalX, float initalX){
-//
-//    }
+    public static float calcForceX(float finalX, float initialX){
+        float changeInX = finalX - initialX;
+        return changeInX * 50;
+    }
+    public static float calcForceY(float finalY, float initialY){
+        float changeInY = finalY - initialY;
+        return changeInY * 50;
+    }
     public static float xSpeed(double speed, float degree){
         float xSpeed = (float) (speed*Math.cos(degree*MathUtils.degreesToRadians));
 //        System.out.println("x: " + xSpeed);
