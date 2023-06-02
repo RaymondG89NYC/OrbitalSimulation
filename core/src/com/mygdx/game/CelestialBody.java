@@ -18,9 +18,9 @@ public class CelestialBody {
     private float externalXForce;
     private float externalYForce;
     private final float GRAVITATIONAL_CONSTANT = 0.001f;
-    private final float DISTANCE_MULTIPLIER = 10f;
+    private final float DISTANCE_MULTIPLIER = 1f;
     private final float DEFAULT_RADIUS = 11f;
-    private final float MAX_FORCE = 1000f;
+    private final float MAX_FORCE = 10000f;
     private ArrayList<CelestialBody> otherBodies;
     private int line;
     private float radius;
@@ -69,7 +69,12 @@ public class CelestialBody {
     }
 
     private float findXForce(int num) {
-        float distance = (otherBodies.get(num).getX() - x) * DISTANCE_MULTIPLIER;
+        float distance = (float)((float) Math.pow(otherBodies.get(num).getX()-x, 2)/calculateTotalDistance(num));
+        float positive = Math.signum(otherBodies.get(num).getX()-x);
+        distance *= calculateTotalDistance(num);
+        distance = (float)Math.sqrt(distance);
+        distance *= DISTANCE_MULTIPLIER;
+        distance *= positive;
         float magnitude = (float) Math.sqrt(distance * distance);
         if (magnitude < 50f) {
             return 0;
@@ -79,7 +84,12 @@ public class CelestialBody {
     }
 
     private float findYForce(int num) {
-        float distance = (otherBodies.get(num).getY() - y) * DISTANCE_MULTIPLIER;
+        float distance = (float) ((float) Math.pow(otherBodies.get(num).getY()-y, 2)/calculateTotalDistance(num));
+        float positive = Math.signum(otherBodies.get(num).getY()-y);
+        distance *= calculateTotalDistance(num);
+        distance = (float)Math.sqrt(distance);
+        distance *= DISTANCE_MULTIPLIER;
+        distance *= positive;
         float magnitude = (float) Math.sqrt(distance * distance);
         if (magnitude < 50f) {
             return 0;
@@ -92,6 +102,13 @@ public class CelestialBody {
         float density = 1f;
         float volume = mass / density;
         return (float) Math.pow((3 * volume) / (4 * Math.PI), 1 / 3f);
+    }
+    private float calculateTotalDistance(int num){
+        float distance = (float)Math.pow(otherBodies.get(num).getX()-x, 2);
+        distance += (float)Math.pow(otherBodies.get(num).getY()-y, 2);
+//        return (float)Math.sqrt(distance);
+        System.out.println("TOtal Distance: " + distance);
+        return distance;
     }
     public boolean mouseTouched(float x, float y){
         return(this.x + radius >= x && this.x - radius <= x

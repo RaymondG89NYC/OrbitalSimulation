@@ -58,7 +58,7 @@ public class Simulation extends ApplicationAdapter {
 //			celestialBodies.add(newStar);
 //		}
 		CelestialBody newStar = new CelestialBody(star2, (float)Helper.random(0, 400), (float)Helper.random(0, 400), 10000f, celestialBodies, celestialBodies.size());
-//		newStar.addExternalXForce(500000);
+		newStar.addExternalXForce(5000);
 		celestialBodies.add(newStar);
 
 		arrow1 = new Texture("arrow.png");
